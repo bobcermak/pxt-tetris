@@ -52,6 +52,8 @@ let check4: boolean = false
 let check5: boolean = false
 
 
+
+
 loops.everyInterval(500, function () {
     dot.y += 1
     if (dot.y >= 5) {
@@ -61,28 +63,20 @@ loops.everyInterval(500, function () {
     if (dot.y === 4) {
         dData[4][dot.x] = true
         check = true
-
-    }
-
-    if (dot.y === 3 && check) {
-        dData[3][dot.x] = true
         check2 = true
+
     }
 
-    if (dot.y === 2 && check2) {
-        dData[2][dot.x] = true
-        check3 = true
+    if (dot.y === 3 && check && check2) {
+        dData[3][dot.x] = true
+        led.plot(dot.x, dot.y)
+        basic.pause(500)
+        dData[3][dot.x] = false
+        dData[4][dot.x] = true
     }
 
-    if (dot.y === 1 && check3) {
-        dData[1][dot.x] = true
-        check4 = true
-    }
+    
 
-    if (dot.y === 0 && check4) {
-        check5 = true
-        dData[0][dot.x] = true
-    }
 
     if (check5) {
         basic.showString("GAME OVER!")
