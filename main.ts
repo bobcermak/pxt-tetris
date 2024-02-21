@@ -39,42 +39,29 @@ function refresh(display: Display, dot: Piece): void {  //zhasnout celý display
 
         }
     }
+
     led.plot(dot.x, dot.y)
 
 }
 
 
 
-let check: boolean = false
-let check2: boolean = false
-let check3: boolean = false
-let check4: boolean = false
 let check5: boolean = false
-
-
-
 
 loops.everyInterval(500, function () {
     dot.y += 1
-    if (dot.y >= 5) {
+    if (dot.y === 4) {
+        dData[4][dot.x] = true
         dot.y = 0
     }
 
-    if (dot.y === 4) {
-        dData[4][dot.x] = true
-        check = true
-        check2 = true
-
+    if (dData[dot.y + 1][dot.x] && dot.y <= 3) {
+        dData[dot.y][dot.x] = true
     }
 
-    if (dot.y === 3 && check && check2) {
-        dData[3][dot.x] = true
-        led.plot(dot.x, dot.y)
-        basic.pause(500)
-        dData[3][dot.x] = false
-        dData[4][dot.x] = true
+    if (dData[0][dot.x]) {
+        check5 = true
     }
-
     
 
 
@@ -83,10 +70,6 @@ loops.everyInterval(500, function () {
         basic.pause(500)
         control.reset()
     }
-
-
-
-
 
 
 
@@ -112,6 +95,7 @@ input.onButtonPressed(Button.B, function () {
     }
 
 })
+
 
 
 
