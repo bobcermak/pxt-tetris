@@ -47,6 +47,9 @@ function refresh(display: Display, dot: Piece): void {  //zhasnout celý display
 
 
 let check5: boolean = false
+let check6: boolean = false
+let down: boolean = false
+let count: number = 0
 
 loops.everyInterval(500, function () {
     dot.y += 1
@@ -55,20 +58,43 @@ loops.everyInterval(500, function () {
         dot.y = 0
     }
 
+
+    if (dData[0][dot.x]) {
+        check5 = true
+
+    }
+    
     if (dData[dot.y + 1][dot.x] && dot.y <= 3) {
         dData[dot.y][dot.x] = true
+
+    }
+
+
+    if (dData[dot.y][0] && dData[dot.y][1] && dData[dot.y][2] && dData[dot.y][3] && dData[dot.y][4]) {
+
+        dData[dot.y][0] = false
+        dData[dot.y][1] = false
+        dData[dot.y][2] = false
+        dData[dot.y][3] = false
+        dData[dot.y][4] = false
+
+        down = true
+        count += 100
+
     }
 
     if (dData[0][dot.x]) {
         check5 = true
     }
+
     
 
 
-    if (check5) {
+    if (check5 && !check6) {
         basic.showString("GAME OVER!")
         basic.pause(500)
-        control.reset()
+        basic.showString("Získal jste " + count + " bodů")
+        check6 = true
     }
 
 
@@ -97,7 +123,9 @@ input.onButtonPressed(Button.B, function () {
 })
 
 
-
+input.onLogoEvent(TouchButtonEvent.Pressed, function() {
+    control.reset()
+})
 
 
 
