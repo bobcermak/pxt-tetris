@@ -72,6 +72,15 @@ loops.everyInterval(500, function () {
 
     if (dData[dot.y][0] && dData[dot.y][1] && dData[dot.y][2] && dData[dot.y][3] && dData[dot.y][4]) {
 
+        dData.pop()
+        dData.unshift([false, false, false, false, false])
+        down = true
+        count += 100
+
+    }
+
+    if (dData[dot.y][0] && dData[dot.y][1] && dData[dot.y][2] && dData[dot.y][3] && dData[dot.y][4]) {
+
         dData[dot.y][0] = false
         dData[dot.y][1] = false
         dData[dot.y][2] = false
@@ -126,6 +135,7 @@ input.onButtonPressed(Button.B, function () {
 input.onLogoEvent(TouchButtonEvent.Pressed, function() {
     control.reset()
 })
+
 
 
 
