@@ -1,4 +1,3 @@
-
 type Piece = {
     x: number,
     y: number
@@ -11,7 +10,7 @@ type Display = Array<Row>
 
 
 const dData: Display = [
-    
+
     [false, false, false, false, false],
     [false, false, false, false, false],
     [false, false, false, false, false],
@@ -41,11 +40,11 @@ function refresh(display: Display, dot: Piece): void {  //zhasnout celý display
 
         }
     }
-    
+
 
     led.plot(dot.x, dot.y)
 
-    
+
 
 }
 
@@ -56,16 +55,16 @@ let check6: boolean = false
 
 
 let count: number = 0
-let funcCount:number = 0
+let funcCount: number = 500
 
 
 
 
 
 basic.forever(function () {
-    basic.pause(500 - funcCount)
-    
-    
+    basic.pause(funcCount)
+
+
     if (check4) {
         dot.y += 1
 
@@ -84,25 +83,25 @@ basic.forever(function () {
             basic.pause(50)
             if (dData[1][dot.x] && dData[2][dot.x]) {
                 dData.unshift([dData[0][dot.x]])
-                
+
                 if ([dData[0][dot.x]]) {
                     check5 = true
                 }
             }
-            
+
         }
 
-        
+
 
 
         if (dData[dot.y][0] && dData[dot.y][1] && dData[dot.y][2] && dData[dot.y][3] && dData[dot.y][4] || dData[4][0] && dData[4][1] && dData[4][2] && dData[4][3] && dData[4][4]) {
-            
+
             dData.pop()
             dData.unshift([false, false, false, false, false])
             count += 1
-            funcCount += 100 
+            funcCount -= 100
 
-            
+
         }
 
 
@@ -144,25 +143,24 @@ input.onButtonPressed(Button.B, function () {
 })
 
 
-input.onLogoEvent(TouchButtonEvent.Pressed, function() {
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     control.reset()
 })
 
 
-input.onPinPressed(TouchPin.P0, function() {
+input.onPinPressed(TouchPin.P0, function () {
     if (check6) {
         basic.showString("G O!")
     }
 })
 
 
-input.onPinPressed(TouchPin.P1, function() {
+input.onPinPressed(TouchPin.P1, function () {
     if (check6) {
         basic.showString("Počet => " + count)
     }
-    
-})
 
+})
 
 
 
