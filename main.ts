@@ -76,14 +76,14 @@ basic.forever(function () {
         }
 
 
-        if (dData[dot.y + 1][dot.x] && dot.y <= 3) {
+        if (dData[dot.y + 1][dot.x]) {
             dData[dot.y][dot.x] = true
             dot.y = 0
             dot.x = 2
             basic.pause(50)
             if (dData[1][dot.x] && dData[2][dot.x]) {
                 dData.unshift([dData[0][dot.x]])
-
+            
                 if ([dData[0][dot.x]]) {
                     check5 = true
                 }
@@ -129,6 +129,10 @@ input.onButtonPressed(Button.A, function () {
         dot.x = 0
     }
 
+    if (dot.y < -1) {
+        dData[dot.y][dot.x] = true
+    }
+
 
 
 })
@@ -138,6 +142,10 @@ input.onButtonPressed(Button.B, function () {
     dot.y -= 1
     if (dot.x > 4) {
         dot.x = 4
+    }
+
+    if (dot.y < -1) {
+        dData[dot.y][dot.x] = true
     }
 
 })
