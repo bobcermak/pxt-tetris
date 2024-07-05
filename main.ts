@@ -124,30 +124,16 @@ basic.forever(function () {
 
 input.onButtonPressed(Button.A, function () {
     dot.x -= 1
-    dot.y -= 1
     if (dot.x < 0) {
         dot.x = 0
     }
-
-    if (dot.y < -1) {
-        dData[dot.y][dot.x] = true
-    }
-
-
-
 })
 
 input.onButtonPressed(Button.B, function () {
     dot.x += 1
-    dot.y -= 1
     if (dot.x > 4) {
         dot.x = 4
     }
-
-    if (dot.y < -1) {
-        dData[dot.y][dot.x] = true
-    }
-
 })
 
 
