@@ -33,6 +33,8 @@ function refresh(display: Display, dot: Piece): void {  //zhasnout celý display
 
             }
 
+            
+
 
             else {
                 led.unplot(x, y)
@@ -49,9 +51,14 @@ function refresh(display: Display, dot: Piece): void {  //zhasnout celý display
 }
 
 
-let check4: boolean = true
-let check5: boolean = false
-let check6: boolean = false
+pins.touchSetMode(TouchTarget.P0, TouchTargetMode.Capacitive)
+
+
+
+
+let running: boolean = true
+let gameOver: boolean = false
+let prepinani: boolean = false
 
 
 let count: number = 0
@@ -62,12 +69,21 @@ let funcCount: number = 500
 
 
 basic.forever(function () {
+
     basic.pause(funcCount)
 
 
-    if (check4) {
-        dot.y += 1
+    if (running) {
 
+        if (!gameOver) {
+            dot.y += 1
+        }
+
+        if (dData[dot.y][dot.x]) {
+            if (dot.y <= 1) {
+                gameOver = true
+            }
+        }
 
         if (dot.y === 4) {
             dData[4][dot.x] = true
@@ -81,15 +97,8 @@ basic.forever(function () {
             dot.y = 0
             dot.x = 2
             basic.pause(50)
-            if (dData[1][dot.x] && dData[2][dot.x]) {
-                dData.unshift([dData[0][dot.x]])
-            
-                if ([dData[0][dot.x]]) {
-                    check5 = true
-                }
-            }
-
         }
+
 
 
 
@@ -106,10 +115,29 @@ basic.forever(function () {
 
 
 
-        if (check5) {   //Aby se G O! neopakovalo pořád dokola a šlo poté pouze přeskakovat přes p0/p1
-            basic.showString("G O!")
-            check6 = true
-            check4 = false
+        if (gameOver) {   //Aby se G O! neopakovalo pořád dokola a šlo poté pouze přeskakovat přes p0/p1
+            running = false
+            for (let a = 0; a < 3; a++) {
+                basic.showLeds(`
+                # . . . #
+                . # . # .
+                . . # . .
+                . # . # .
+                # . . . #
+                `)
+
+                basic.pause(1000)
+
+                basic.showLeds(`
+                . . . . .
+                . # . # .
+                . . # . .
+                . # . # .
+                . . . . .
+                `)
+            }
+            
+            prepinani = true
 
         }
 
@@ -127,6 +155,13 @@ input.onButtonPressed(Button.A, function () {
     if (dot.x < 0) {
         dot.x = 0
     }
+
+    if (dot.y < -1) {
+        dData[dot.y][dot.x] = true
+    }
+
+
+
 })
 
 input.onButtonPressed(Button.B, function () {
@@ -134,6 +169,7 @@ input.onButtonPressed(Button.B, function () {
     if (dot.x > 4) {
         dot.x = 4
     }
+
 })
 
 
@@ -141,31 +177,11 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     control.reset()
 })
 
-
 input.onPinPressed(TouchPin.P0, function () {
-    if (check6) {
-        basic.showString("G O!")
-    }
-})
-
-
-input.onPinPressed(TouchPin.P1, function () {
-    if (check6) {
-        basic.showString("Počet => " + count)
+    if (prepinani) {
+        basic.showNumber(count)
     }
 
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
